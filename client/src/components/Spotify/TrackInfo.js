@@ -11,6 +11,10 @@ export default class TrackInfo extends React.Component {
 		          	<img src={this.props.albumImage.url} 
 		          	width='100px' 
 		          	height='100px'/>
+		          	 <button 
+		          	 	onClick={this.props.onButtonSubmit}
+		          	 	disabled={!this.props.postAccess}
+		          	 	>Post</button>
 	           {`Track name is ${this.props.trackName}`}
 	           {`Release date is ${this.props.releaseDate}`}
 			</div>

@@ -2,7 +2,7 @@ import React from 'react';
 
 const UserInput = ({ handleSubmit, handleChange }) => {
 	return (
-		<form onSubmit={handleSubmit}>
+		<form onSubmit={ handleSubmit }>
 	        <label>
 	          Name:
 	          <input type="text" onChange={handleChange} />

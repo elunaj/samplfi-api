@@ -2,21 +2,19 @@ import React from 'react';
 import TrackInfo from './components/Spotify/TrackInfo';
 import TrackAnalysis from './components/Spotify/TrackAnalysis';
 import UserInput from './components/Spotify/UserInput';
+import UserInfo from './components/Profile/UserInfo';
 import Signin from './components/Signin/Signin';
+import TrackList from './components/Spotify/TrackList';
 import Register from './components/Register/Register';
 import Navigation from './components/Navigation/Navigation';
 import './App.css';
 
-/*
-tI = track info - received from search api endpoint 
-tA = track analysis - received from search/features api endpoint
-*/
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userQuery: "chum", //my query
+      userQuery: "",
       artistName: "",
       albumName: "",
       albumImage: [],
@@ -36,23 +34,74 @@ class App extends React.Component {
       trackTempo: "",
       trackAnalysisFound: false,
       route: 'signin',
-      isSignedIn: false
+      isSignedIn: false,
+      user: {
+          id: "",
+          email: "",
+          trackInfo: [{
+            showArtistName: "",
+            showTrackTitle: "",
+            showAlbumName: "",
+            showAlbumCover: ""
+          
+          }],
+          tracksSaved: 0,
+          joined: ""
+      }
     };
   }
 
+  // loads user when 
+  loadUser = (data) => {
+    this.setState({user: {
+      id: data.id,
+      email: data.email,
+      trackInfo: data.trackInfo,
+      tracksSaved: data.tracksSaved,
+      joined: data.joined
+    }})
+  }
+
+  // Handles user post button click in TrackInfo
+  onButtonSubmit = () => {
+    console.log('post enterted')
+    fetch('http://localhost:5000/tracks', {
+      method: 'post',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        id: this.state.user.id,
+        artistName: this.state.artistName,
+        trackName: this.state.trackName,
+        albumName: this.state.albumName,
+        albumImage: this.state.albumImage
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data)
+      return data;
+    })
+    .then(count => {
+      this.setState({user: {
+       tracksSaved: count.tracksSaved
+        }})
+      })
+  }
+
+  // User input for track search submission
   handleSubmit = (event) => {
     event.preventDefault();
     this.findTrack();
   }
 
+  // User input for track search
   handleChange = (event) => {
     this.setState({
       userQuery: event.target.value
     })
-
-    console.log('User query', event.target.value)
   }
 
+  // Finds track information when user submits UserInput form
   findTrack() {
     fetch('http://localhost:5000/search/' + this.state.userQuery, {
       method: 'GET',
@@ -79,6 +128,7 @@ class App extends React.Component {
       .catch(err => console.log(err));
   }
 
+  // Finds track analysis once findTrack() resolves
   findTrackAnalysis() {
     fetch('http://localhost:5000/search/analysis/' + this.state.trackId, {
       method: 'GET',
@@ -111,16 +161,14 @@ class App extends React.Component {
     .catch(err => console.log(err));
   }
  
-  componentDidMount() {
-    
-  }
-
+  // Runs only when findTrack resolves
   componentDidUpdate() {
     if (this.state.trackId && !this.state.trackAnalysisFound) {
       this.findTrackAnalysis();
     }
   }
 
+  // Handles views/routes depending on user clicks
   onRouteChange = (route) => {
     if (route === 'signout') {
       this.setState({
@@ -144,12 +192,17 @@ class App extends React.Component {
          { /*<Logo />*/}
         { this.state.route === 'home' 
           ? <div>
+              <UserInfo 
+                email={this.state.user.email}
+              />
               <UserInput
                 handleSubmit={this.handleSubmit}
                 handleChange={this.handleChange}
               />
 
-              <TrackInfo 
+              <TrackInfo
+                onButtonSubmit={this.onButtonSubmit}
+                postAccess={this.state.trackAnalysisFound} 
                 artistName={this.state.artistName}
                 albumName={this.state.albumName}
                 albumImage={this.state.albumImage}
@@ -170,11 +223,20 @@ class App extends React.Component {
                 valence={this.state.trackValence}
                 tempo={this.state.trackTempo}
                  />
+
+              <TrackList
+                trackInfo={this.state.user.trackInfo}
+                tracksSaved={this.state.user.tracksSaved}
+              />
             </div>
           : (
             this.state.route === 'signin' 
-            ? <Signin onRouteChange={this.onRouteChange}/> 
-            : <Register onRouteChange={this.onRouteChange}/> 
+            ? <Signin 
+              loadUser={this.loadUser}
+              onRouteChange={this.onRouteChange}/> 
+            : <Register 
+              loadUser={this.loadUser}
+              onRouteChange={this.onRouteChange}/> 
             )
         }
 

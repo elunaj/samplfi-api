@@ -2,14 +2,14 @@ const express = require('express');
 const router = express.Router();
 const request = require('request');
 
-const accessToken = 'BQD7ZsGre15MZcghKF73nA5HCIsoLuaetgYRH7Lf7Tj0iEBmvS7pS_voP95nc7ge_yPavKeye4JbTZmJ9h0';
+const accessToken = 'BQB13dsKccVdliEXN8hEHrxPyllmMc34mibnXNVxlHEsD6S5JghPuFIKmfpNj50xQgnqNqg6-_uB54T2-Aw';
 
 router.get('/:query', (req, res) => {
   
   const userSearchInput = req.params.query;
 
   let BASE_URL = 'https://api.spotify.com/v1/search?';
-  let FETCH_URL = BASE_URL + 'q=' + userSearchInput + '&type=track&limit=1';
+  let FETCH_URL = BASE_URL + 'q=' + userSearchInput + '&type=track';
 
   request(FETCH_URL, {
     headers: {
