@@ -1,6 +1,6 @@
-const request = require('request'); 
+const axios = require('axios');
 
-const getSpotifyApiToken = () => {
+function getSpotifyApiToken() {
 
   /*Spotify Client Credentials oAuth2 flow 
   to authenticate against the Spotify Accounts.*/
@@ -9,31 +9,27 @@ const getSpotifyApiToken = () => {
   const client_id = process.env.CLIENT_ID; // Client id
   const client_secret = process.env.CLIENT_SECRET; // Secret
 
-  // application requests authorization
-  const authOptions = {
+  return axios({
+    method: 'post',
     url: 'https://accounts.spotify.com/api/token',
     headers: {
-      'Authorization': 'Basic ' + (new Buffer.from(client_id + ':' + client_secret)
-        .toString('base64'))
+    'Authorization': 'Basic ' + (new Buffer.from(client_id + ':' + client_secret).toString('base64')),        
+    'Content-Type': 'application/x-www-form-urlencoded'
     },
-    form: {
+    params: {
       grant_type: 'client_credentials'
     },
-    json: true
-  };
-
-  request.post(authOptions, (error, response, body) => {
-    if (!error && response.statusCode === 200) {
-      // use the access token to access the Spotify Web API
-      token = body.access_token;
-      console.log(token)
-    } else {
-      console.log(error);
-
-    }
-  });
-
-}
+    json: true,
+  })
+    .then(body => {
+      return body.data.access_token;
+    })
+    .catch(e => {
+      console.log('error', e.response.data);
+    });
+};
 
 
-module.exports.getSpotifyApiToken = getSpotifyApiToken;
+module.exports = {
+  getSpotifyApiToken
+};

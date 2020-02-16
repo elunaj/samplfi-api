@@ -1,14 +1,46 @@
 import React from 'react';
 import TrackInfo from './components/Spotify/TrackInfo';
-import TrackAnalysis from './components/Spotify/TrackAnalysis';
-import UserInput from './components/Spotify/UserInput';
-import UserInfo from './components/Profile/UserInfo';
 import Signin from './components/Signin/Signin';
 import TrackList from './components/Spotify/TrackList';
 import Register from './components/Register/Register';
 import Navigation from './components/Navigation/Navigation';
 import './App.css';
 
+const initialState = {
+      userQuery: "",
+      artistName: "",
+      albumName: "",
+      albumImage: [],
+      trackId: "",
+      trackName: "",
+      releaseDate: "",
+      trackDanceability: "",
+      trackEnergy: "",
+      trackKey: "",
+      trackLoudness: "",
+      trackMode: "",
+      trackSpeechiness: "",
+      trackAcousticness: "",
+      trackInstrumentalness: "",
+      trackLiveness: "",
+      trackValence: "",
+      trackTempo: "",
+      trackAnalysisFound: false,
+      route: 'signin',
+      isSignedIn: false,
+      user: {
+          id: "",
+          email: "",
+          trackInfo: [{
+            showArtistName: "",
+            showTrackTitle: "",
+            showAlbumName: "",
+            showAlbumCover: ""    
+          }],
+          tracksSaved: 0,
+          joined: ""
+      }
+    };
 
 class App extends React.Component {
   constructor(props) {
@@ -42,8 +74,7 @@ class App extends React.Component {
             showArtistName: "",
             showTrackTitle: "",
             showAlbumName: "",
-            showAlbumCover: ""
-          
+            showAlbumCover: ""    
           }],
           tracksSaved: 0,
           joined: ""
@@ -57,16 +88,15 @@ class App extends React.Component {
       id: data.id,
       email: data.email,
       trackInfo: data.trackInfo,
-      tracksSaved: data.tracksSaved,
+      tracksSaved: data.trackssaved,
       joined: data.joined
     }})
   }
 
   // Handles user post button click in TrackInfo
   onButtonSubmit = () => {
-    console.log('post enterted')
     fetch('http://localhost:5000/tracks', {
-      method: 'post',
+      method: 'put',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
         id: this.state.user.id,
@@ -77,14 +107,8 @@ class App extends React.Component {
       })
     })
     .then(response => response.json())
-    .then(data => {
-      console.log(data)
-      return data;
-    })
     .then(count => {
-      this.setState({user: {
-       tracksSaved: count.tracksSaved
-        }})
+      this.setState(Object.assign(this.state.user, { tracksSaved: count.trackssaved }))
       })
   }
 
@@ -122,7 +146,8 @@ class App extends React.Component {
           albumImage: trackInfo.tracks.items[0].album.images[1],
           trackId: trackInfo.tracks.items[0].id,
           trackName: trackInfo.tracks.items[0].name,
-          releaseDate: trackInfo.tracks.items[0].album.release_date
+          releaseDate: trackInfo.tracks.items[0].album.release_date,
+          trackAnalysisFound: false
         })
       })
       .catch(err => console.log(err));
@@ -171,9 +196,7 @@ class App extends React.Component {
   // Handles views/routes depending on user clicks
   onRouteChange = (route) => {
     if (route === 'signout') {
-      this.setState({
-        isSignedIn: false
-      })
+      this.setState(initialState);
     } else if (route === 'home') {
       this.setState({
         isSignedIn: true
@@ -192,15 +215,10 @@ class App extends React.Component {
          { /*<Logo />*/}
         { this.state.route === 'home' 
           ? <div>
-              <UserInfo 
-                email={this.state.user.email}
-              />
-              <UserInput
+              <TrackInfo
                 handleSubmit={this.handleSubmit}
                 handleChange={this.handleChange}
-              />
-
-              <TrackInfo
+                email={this.state.user.email}
                 onButtonSubmit={this.onButtonSubmit}
                 postAccess={this.state.trackAnalysisFound} 
                 artistName={this.state.artistName}
@@ -208,9 +226,6 @@ class App extends React.Component {
                 albumImage={this.state.albumImage}
                 trackName={this.state.trackName}
                 releaseDate={this.state.releaseDate}
-              />
-
-              <TrackAnalysis
                 danceability={this.state.trackDanceability}
                 energy={this.state.trackEnergy}
                 key={this.state.trackKey}
@@ -222,12 +237,10 @@ class App extends React.Component {
                 liveness={this.state.trackLiveness}
                 valence={this.state.trackValence}
                 tempo={this.state.trackTempo}
-                 />
-
-              <TrackList
                 trackInfo={this.state.user.trackInfo}
                 tracksSaved={this.state.user.tracksSaved}
               />
+
             </div>
           : (
             this.state.route === 'signin' 

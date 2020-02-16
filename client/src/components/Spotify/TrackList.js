@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default class UserInfo extends React.Component {
-
+	
 	render() {
 
 		console.log(this.props.trackInfo)
@@ -9,7 +9,7 @@ export default class UserInfo extends React.Component {
 		return (
 			<div>
 			{`Your track count is... ${this.props.tracksSaved}`}
-			 		{this.props.trackInfo.map( (track, i) => {
+			 	{/*{this.props.trackInfo.map( (track, i) => {
 			 			return (
 			 				<div key={i}>
 			 				<li>{track.showArtistName}</li>
@@ -24,7 +24,7 @@ export default class UserInfo extends React.Component {
 			 			)
 			 		})
 			 	}
-			 	
+			 	*/}
 			</div>
 		);
 	}
