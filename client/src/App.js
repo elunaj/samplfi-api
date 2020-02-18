@@ -1,7 +1,6 @@
 import React from 'react';
-import TrackInfo from './components/Spotify/TrackInfo';
+import HomeView from './components/Spotify/HomeView';
 import Signin from './components/Signin/Signin';
-import TrackList from './components/Spotify/TrackList';
 import Register from './components/Register/Register';
 import Navigation from './components/Navigation/Navigation';
 import './App.css';
@@ -37,7 +36,6 @@ const initialState = {
             showAlbumName: "",
             showAlbumCover: ""    
           }],
-          tracksSaved: 0,
           joined: ""
       }
     };
@@ -76,7 +74,6 @@ class App extends React.Component {
             showAlbumName: "",
             showAlbumCover: ""    
           }],
-          tracksSaved: 0,
           joined: ""
       }
     };
@@ -88,12 +85,11 @@ class App extends React.Component {
       id: data.id,
       email: data.email,
       trackInfo: data.trackInfo,
-      tracksSaved: data.trackssaved,
       joined: data.joined
     }})
   }
 
-  // Handles user post button click in TrackInfo
+  // Handles user post button click in HomeView
   onButtonSubmit = () => {
     fetch('http://localhost:5000/tracks', {
       method: 'put',
@@ -107,9 +103,10 @@ class App extends React.Component {
       })
     })
     .then(response => response.json())
-    .then(count => {
-      this.setState(Object.assign(this.state.user, { tracksSaved: count.trackssaved }))
+    .then(tr => {
+      console.log('tracks response:', tr)
       })
+    .catch(console.log)
   }
 
   // User input for track search submission
@@ -136,7 +133,7 @@ class App extends React.Component {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
+        console.log('find', data);
         return data;
       })
       .then(trackInfo => {
@@ -185,13 +182,7 @@ class App extends React.Component {
     })
     .catch(err => console.log(err));
   }
- 
-  // Runs only when findTrack resolves
-  componentDidUpdate() {
-    if (this.state.trackId && !this.state.trackAnalysisFound) {
-      this.findTrackAnalysis();
-    }
-  }
+
 
   // Handles views/routes depending on user clicks
   onRouteChange = (route) => {
@@ -202,20 +193,31 @@ class App extends React.Component {
         isSignedIn: true
       })
     }
+
     this.setState({
       route: route
     })
+  }
+
+  // Runs only when findTrack resolves
+  componentDidUpdate() {
+    if (this.state.trackId && !this.state.trackAnalysisFound) {
+      this.findTrackAnalysis();
+    }
   }
 
   render() {
     
     return (
       <div className="App">
-          <Navigation isSignedIn={this.state.isSignedIn} onRouteChange={this.onRouteChange} />
+          <Navigation 
+            isSignedIn={this.state.isSignedIn} 
+            onRouteChange={this.onRouteChange} 
+            />
          { /*<Logo />*/}
         { this.state.route === 'home' 
           ? <div>
-              <TrackInfo
+              <HomeView
                 handleSubmit={this.handleSubmit}
                 handleChange={this.handleChange}
                 email={this.state.user.email}
@@ -238,18 +240,18 @@ class App extends React.Component {
                 valence={this.state.trackValence}
                 tempo={this.state.trackTempo}
                 trackInfo={this.state.user.trackInfo}
-                tracksSaved={this.state.user.tracksSaved}
+                userId={this.state.user.id}
               />
 
             </div>
           : (
-            this.state.route === 'signin' 
+            this.state.route === 'signin' || this.state.route === 'signout'
             ? <Signin 
               loadUser={this.loadUser}
-              onRouteChange={this.onRouteChange}/> 
+              onRouteChange={this.onRouteChange} /> 
             : <Register 
               loadUser={this.loadUser}
-              onRouteChange={this.onRouteChange}/> 
+              onRouteChange={this.onRouteChange} /> 
             )
         }
 

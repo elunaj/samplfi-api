@@ -1,52 +1,55 @@
 import React from 'react';
-import styled from 'styled-components';
-
-const Nav = styled.nav`
-	background-color: #282c34;
-	min-height: 25vh;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: flex-end;
-	font-size: calc(10px + 2vmin);
-	color: white;
-`;
-
-const Link = styled.p`
-	font-size: calc(10px + 2vmin);
-	margin: 2rem;
-`;
+import { Grid, AppBar, Toolbar, Typography, Button, IconButton} from '@material-ui/core';
+import './Navigation.css';
 
 
 const Navigation = ( { onRouteChange, isSignedIn }) => {
 		if(isSignedIn) {
 			return (
-				<Nav>
-					<Link 
-						href=""
-						onClick={() => onRouteChange('signout')}
-						>Sign Out
-					</Link>
-				</Nav>
+
+				<AppBar position="static">
+				  <Toolbar>
+				    <Typography variant="h6">
+				      KnowYourSample
+				    </Typography>
+				    <Button 
+				    	color="inherit"
+				    	onClick={() => onRouteChange('signout')}
+				    	>Sign out
+				    </Button>
+				  </Toolbar>
+				</AppBar>
+
 			);
 		} else {
 			return (
-				<Nav>
-					<Link 
-						href=""
-						onClick={() => onRouteChange('signin')}
-						>Sign In
-					</Link>
-					<Link 
-						href=""
-						onClick={() => onRouteChange('register')}
-						>Register
-					</Link>
-				</Nav>
+
+				<AppBar position="static" className="MuiAppBar-colorPrimary">
+				  <Toolbar>
+				    <Typography variant="h6">
+				      KnowYourSample
+				    </Typography>
+				    <Button 
+				    	color="inherit"
+				    	onClick={() => onRouteChange('signin')}
+				    	>Sign In
+				    </Button>
+				    <Button 
+				    	color="inherit"
+				    	onClick={() => onRouteChange('register')}
+				    	>Register
+				    </Button>
+				  </Toolbar>
+				</AppBar>
 
 			);
 		}
 	
 }
+
+
+
+
+
 
 export default Navigation;

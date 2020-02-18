@@ -1,5 +1,6 @@
 import React from 'react';
-import { FormGroup, Label, Input, Message, Wrapper, Button } from "./RegisterForm";
+import { FormControl, InputLabel, Input, FormHelperText, 
+	Form, FormLabel, Grid, Button, Card } from '@material-ui/core';
 
 
 class Register extends React.Component {
@@ -42,35 +43,59 @@ class Register extends React.Component {
 	render() {
 
 		return (
-			<Wrapper>
-				<Message>Register</Message>
-			    <FormGroup>
-			      <Label htmlFor="email">Email</Label>
-			      <Input 
-			      	id="email" 
-			      	type="email" 
-			      	name="email"
-			      	onChange={this.onEmailChange} 
-			      	/>
-			    </FormGroup>
-			    <FormGroup>
-			      <Label htmlFor="password">Password</Label>
-			      <Input 
-			      	id="password" 
-			      	type="password" 
-			      	name="password"
-			      	onChange={this.onPasswordChange}
-			      	/>
-			      <Message>This is the validation message</Message>
-			    </FormGroup>
-			    <Button 
-			    	onClick={this.onSubmitRegister}
-			    	type="submit" 
-			    	value="Register">
-			    	Sign in
-			    </Button>
-		  	</Wrapper>
-	);
+
+			<div>
+				<Card className="Card">
+					<Grid container spacing={4}>
+
+						<Grid item xs={12}>
+							<FormLabel>Register</FormLabel>
+						</Grid>
+
+						<Grid item xs={12}>
+							<FormControl>
+							  <InputLabel htmlFor="email">Email address</InputLabel>
+							  <Input 
+							  	id="email" 
+						      	type="email" 
+						      	name="email"
+							  	aria-describedby="my-helper-text"
+							  	onChange={this.onEmailChange} 
+							   />
+							  <FormHelperText id="my-helper-text">We'll never share your email.</FormHelperText>
+							</FormControl>
+						</Grid>
+
+						<Grid item xs={12}>
+							<FormControl>
+							  <InputLabel htmlFor="password">Password</InputLabel>
+							  <Input 
+							  	id="password" 
+						      	type="password" 
+						      	name="password"
+						      	aria-describedby="my-helper-text"
+						      	onChange={this.onPasswordChange}
+							  	/>
+							  <FormHelperText id="my-helper-text">We'll never share your password.</FormHelperText>
+							</FormControl>
+						</Grid>
+
+						<Grid item xs={12}>
+							<FormControl>
+								 <Button 
+								 	variant="outlined" 
+							    	onClick={this.onSubmitRegister}
+							    	type="submit" 
+							    	value="Sign UP"
+							    	>Sign UP
+							    </Button>
+							</FormControl>
+						</Grid>
+
+					</Grid>
+				</Card>
+			  </div>
+		);
 	}
 
 }
