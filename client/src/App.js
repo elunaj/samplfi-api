@@ -1,5 +1,5 @@
 import React from 'react';
-import HomeView from './components/Spotify/HomeView';
+import HomeView from './components/Spotify/HomeView/HomeView';
 import Signin from './components/Signin/Signin';
 import Register from './components/Register/Register';
 import Navigation from './components/Navigation/Navigation';
@@ -25,7 +25,7 @@ const initialState = {
       trackValence: "",
       trackTempo: "",
       trackAnalysisFound: false,
-      route: 'signin',
+      route: 'demo',
       isSignedIn: false,
       user: {
           id: "",
@@ -37,7 +37,9 @@ const initialState = {
             showAlbumCover: ""    
           }],
           joined: ""
-      }
+      },
+      newTrackAdded: false,
+      loading: false
     };
 
 class App extends React.Component {
@@ -63,7 +65,7 @@ class App extends React.Component {
       trackValence: "",
       trackTempo: "",
       trackAnalysisFound: false,
-      route: 'signin',
+      route: 'demo',
       isSignedIn: false,
       user: {
           id: "",
@@ -75,7 +77,9 @@ class App extends React.Component {
             showAlbumCover: ""    
           }],
           joined: ""
-      }
+      },
+      newTrackAdded: false,
+      loading: false
     };
   }
 
@@ -105,6 +109,9 @@ class App extends React.Component {
     .then(response => response.json())
     .then(tr => {
       console.log('tracks response:', tr)
+      this.setState({
+        newTrackAdded: true
+        })
       })
     .catch(console.log)
   }
@@ -119,6 +126,18 @@ class App extends React.Component {
   handleChange = (event) => {
     this.setState({
       userQuery: event.target.value
+    })
+  }
+
+  setNewTrackAddedToFalse = () => {
+    this.setState({
+      newTrackAdded: false
+    })
+  }
+
+   setLoadingToFalse = () => {
+    this.setState({
+      loading: false
     })
   }
 
@@ -144,7 +163,9 @@ class App extends React.Component {
           trackId: trackInfo.tracks.items[0].id,
           trackName: trackInfo.tracks.items[0].name,
           releaseDate: trackInfo.tracks.items[0].album.release_date,
-          trackAnalysisFound: false
+          trackAnalysisFound: false,
+          loading: true
+
         })
       })
       .catch(err => console.log(err));
@@ -177,7 +198,8 @@ class App extends React.Component {
         trackLiveness: trackAnalysis.liveness,
         trackValence: trackAnalysis.valence,
         trackTempo: trackAnalysis.tempo,
-        trackAnalysisFound: true
+        trackAnalysisFound: true,
+        loading: false
       })
     })
     .catch(err => console.log(err));
@@ -212,12 +234,18 @@ class App extends React.Component {
       <div className="App">
           <Navigation 
             isSignedIn={this.state.isSignedIn} 
-            onRouteChange={this.onRouteChange} 
+            onRouteChange={this.onRouteChange}
+            email={this.state.user.email} 
             />
          { /*<Logo />*/}
         { this.state.route === 'home' 
           ? <div>
               <HomeView
+                setLoadingToFalse={this.setLoadingToFalse}
+                loading={this.state.loading}
+                trackAnalysisFound={this.state.trackAnalysisFound}
+                setNewTrackAddedToFalse={this.setNewTrackAddedToFalse}
+                newTrackAdded={this.state.newTrackAdded}
                 handleSubmit={this.handleSubmit}
                 handleChange={this.handleChange}
                 email={this.state.user.email}
@@ -252,8 +280,13 @@ class App extends React.Component {
             : <Register 
               loadUser={this.loadUser}
               onRouteChange={this.onRouteChange} /> 
-            )
+            ) 
         }
+
+        {this.state.route === 'demo'
+        ? 'Hey'
+        : null
+      }
 
       </div>
     );

@@ -5,6 +5,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import './TrackCollection.css';
 
@@ -12,19 +13,9 @@ export default class TrackCollection extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			fetchStatus: this.props.fetchStatus,
-			userTracksCollection: [...this.props.userTracksCollection]
+			fetchStatus: this.props.fetchStatus
 
 		}
-	}
-
-	componentDidMount() {
-		console.log('tc', this.props.fetchStatus)
-		console.log('tc', [...this.state.userTracksCollection])
-	}
-
-	componentDidUpdate() {
-		console.log(this.state.userTracksCollection)
 	}
 
 	render() {
@@ -33,16 +24,23 @@ export default class TrackCollection extends React.Component {
 			<div>
 				{this.state.fetchStatus 
 
-					?	(this.state.userTracksCollection.map( (track, i) => {
+					?	(this.props.userTracksCollection.map( (track, i) => {
 					 			return (
 					 				<Card className="tc" key={i}>
 						 				<CardActions>
+						 					<Grid 
+						 						container
+						 						direction="row"
+						 						alignItems = 'center'
+						 						justify="center"
+						 						>
 										        <Button 
 										        	size="small" 
 										        	color="primary"
-										
+													onClick={() => this.props.deleteTrack(track.track_id, i)}
 										        	>Remove
 										        </Button>
+										    </Grid>
 										      </CardActions>
 									      <CardActionArea>
 								        <CardMedia

@@ -6,6 +6,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
@@ -21,20 +22,21 @@ const useStyles = makeStyles({
 });
 
 export default function TrackDisplay( {artistName, albumName, albumUrl, 
-	trackName, releaseDate, onButtonSubmit, postAccess } ) {
+	trackName, releaseDate, onButtonSubmit, postAccess} ) {
   
   const classes = useStyles();
+
 
   return (
     <Card className={classes.root} >
       <CardActionArea>
         <CardMedia
           component="img"
-          alt="Contemplative Reptile"
+          alt="Album cover image"
           height="250"
           width="250"
           image={albumUrl}
-          title="Contemplative Reptile"
+          title="Track"
         />
         <CardContent>
           <Typography gutterBottom variant="h4" component="h2">
@@ -52,6 +54,12 @@ export default function TrackDisplay( {artistName, albumName, albumUrl,
         </CardContent>
       </CardActionArea>
 	      <CardActions>
+          <Grid 
+            container
+            direction="row"
+            alignItems= "center"
+            justify="center"
+                       >
 	        <Button 
 	        	size="small" 
 	        	color="primary"
@@ -59,6 +67,7 @@ export default function TrackDisplay( {artistName, albumName, albumUrl,
 	        	onClick={onButtonSubmit}
 	        	>Add to collection
 	        </Button>
+        </Grid>
 	      </CardActions>
     </Card>
   );
