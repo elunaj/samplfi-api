@@ -19,10 +19,9 @@ const tracks = require('./controllers/tracks');
 const db = knex({
   client: 'pg',
   connection: {
-    host : 'postgresql-flat-79910',
-    user : 'Luna23',
-    password : '',
-    database : 'music-app'
+    host : process.env.DATABASE_URL,
+    ssl: true
+
   }
 });
 
