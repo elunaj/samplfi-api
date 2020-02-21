@@ -1,5 +1,6 @@
-require('dotenv').config({ path: '.env'});
 
+const dotenv = require('dotenv');
+dotenv.config();
 const createError = require('http-errors');
 const express = require('express');
 const cookieParser = require('cookie-parser');
