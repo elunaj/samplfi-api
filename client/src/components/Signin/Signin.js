@@ -9,7 +9,8 @@ class Signin extends React.Component {
 		super(props);
 		this.state = {
 			signInEmail: "",
-			signInPassword: ""
+			signInPassword: "",
+			errorMessage: ""
 		}
 	}
 
@@ -33,11 +34,15 @@ class Signin extends React.Component {
 		.then(response => response.json())
 		.then(user => {
 			if (user.id) {
-				console.log('sign in user', user)
 				this.props.loadUser(user);
 				this.props.onRouteChange('home');
+			} else {
+				this.setState({
+					errorMessage: 'error signing in'
+				})
 			}
 		})
+		.catch(err => console.log)
 	}
 
 	render() {
@@ -63,7 +68,6 @@ class Signin extends React.Component {
 								  	aria-describedby="my-helper-text"
 								  	onChange={this.onEmailChange} 
 								   />
-								  <FormHelperText id="my-helper-text">We'll never share your email.</FormHelperText>
 								</FormControl>
 							</Grid>
 
@@ -77,7 +81,6 @@ class Signin extends React.Component {
 							      	aria-describedby="my-helper-text"
 							      	onChange={this.onPasswordChange}
 								  	/>
-								  <FormHelperText id="my-helper-text">We'll never share your password.</FormHelperText>
 								</FormControl>
 							</Grid>
 							<Grid item xs={12}>
@@ -99,6 +102,23 @@ class Signin extends React.Component {
 								    	>Register
 								    </Button>
 							    </FormControl>
+						  </Grid>
+						  <Grid 
+						  	container
+						  	direction="row"
+          					alignItems= "center"
+          					justify="center"
+						  >
+						  	  {this.state.errorMessage.length > 0 
+							  	? <FormHelperText 
+							  		style={{'color': 'red',
+							  		'fontSize': '1rem',
+							  		'marginBottom': '1rem'}}
+							  		id="my-helper-text">
+									{this.state.errorMessage}
+							  </FormHelperText>
+								: null}
+
 						  </Grid>
 					</Grid>
 				</Card>

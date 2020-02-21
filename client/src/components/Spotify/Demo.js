@@ -1,22 +1,14 @@
 import React from 'react';
-import UserInput from '../../Spotify/UserInput/UserInput';
-import TrackCollection from '../../Spotify/TrackCollection/TrackCollection';
-import TrackDisplay from '../../Spotify/TrackDisplay';
-import TrackAnalysis from '../../Spotify/TrackAnalysis';
-import Spinner from '../../Spinner/Spinner';
+import UserInput from '../Spotify/UserInput/UserInput';
+import TrackDisplay from '../Spotify/TrackDisplay';
+import TrackAnalysis from '../Spotify/TrackAnalysis';
+import Spinner from '../Spinner/Spinner';
 import { Typography } from '@material-ui/core';
-import './HomeView.css';
+import './HomeView/HomeView.css';
 
 
-export default class Demo extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			fetchStatus: false,
-			userTracksCollection: []
+export default class HomeView extends React.Component {
 
-		}
-	}
 
 	render() {
 		return (
@@ -24,7 +16,7 @@ export default class Demo extends React.Component {
 
 			 <Typography 
 			 	style={{
-			 		'margin-top': '2.5rem',
+			 		'marginTop': '2.5rem',
 			 		'display': 'block'
 			 	}}
 			 	variant="h3">Get Audio Analysis for your Music Sample
@@ -46,6 +38,17 @@ export default class Demo extends React.Component {
 	                handleSubmit={this.props.handleSubmit}
 	                handleChange={this.props.handleChange}
               	/>
+
+              	 <Typography 
+			 	style={{
+			 		'margin': '-2rem 1rem',
+			 		'marginBottom': '.5rem',
+			 		'textDecoration': 'underline'
+
+			 	}}
+			 	variant="subtitle2">
+			 	Register to save your tracks
+			 	</Typography>
 
               	{this.props.loading 
               		? 
@@ -80,6 +83,7 @@ export default class Demo extends React.Component {
 							tempo={this.props.tempo}
 						/>
 					</div>
+
 					
 				 : null }
 
@@ -89,4 +93,10 @@ export default class Demo extends React.Component {
 	}
 }
 
+
+/*
+
+
+
+*/
 

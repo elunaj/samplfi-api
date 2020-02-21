@@ -34,7 +34,6 @@ export default class HomeView extends React.Component {
 			return response.json()
 		})
 		.then(tracks => {
-			console.log('tracks', tracks)
 			this.setState({
 				userTracksCollection: [...tracks],
 				fetchStatus: true
@@ -57,7 +56,6 @@ export default class HomeView extends React.Component {
 	      const copyArray = Object.assign([], this.state.userTracksCollection);
 	      copyArray.splice(i, 1);
 
-	      console.log('copy', copyArray);
 	      this.setState({
 	      	userTracksCollection: copyArray
 	      })
@@ -70,7 +68,6 @@ export default class HomeView extends React.Component {
 
 		this.findUserTracks();
 
-		console.log('new track', this.props.newTrackAdded)
 
 	}
 	
@@ -85,8 +82,6 @@ export default class HomeView extends React.Component {
 			this.props.setNewTrackAddedToFalse();
 		}
 
-		console.log('did update', this.props.newTrackAdded)
-
 	}
 
 	render() {
@@ -95,7 +90,7 @@ export default class HomeView extends React.Component {
 
 			 <Typography 
 			 	style={{
-			 		'margin-top': '2.5rem',
+			 		'marginTop': '2.5rem',
 			 		'display': 'block'
 			 	}}
 			 	variant="h3">Get Audio Analysis for your Music Sample
@@ -156,7 +151,7 @@ export default class HomeView extends React.Component {
 
 				<Typography 
 			 	style={{
-			 		'margin-top': '2.5rem',
+			 		'marginTop': '2.5rem',
 			 		'display': 'block'
 			 	}}
 			 	variant="h4">Track Collection:
@@ -181,10 +176,4 @@ export default class HomeView extends React.Component {
 	}
 }
 
-
-/*
-
-
-
-*/
 

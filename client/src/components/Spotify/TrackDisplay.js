@@ -1,5 +1,4 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
@@ -9,26 +8,15 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-const useStyles = makeStyles({
-  root: {
-    maxWidth: 345,
-    minWidth: 345,
-    'display': 'inline-block',
-   	padding: '5px',
-   	'margin-top': '1.5rem',
-   	'margin-bottom': '1.5rem'
-  },
-
-});
 
 export default function TrackDisplay( {artistName, albumName, albumUrl, 
 	trackName, releaseDate, onButtonSubmit, postAccess} ) {
   
-  const classes = useStyles();
 
 
   return (
-    <Card className={classes.root} >
+
+    <Card className="Display-track" >
       <CardActionArea>
         <CardMedia
           component="img"

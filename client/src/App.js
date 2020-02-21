@@ -2,7 +2,10 @@ import React from 'react';
 import HomeView from './components/Spotify/HomeView/HomeView';
 import Signin from './components/Signin/Signin';
 import Register from './components/Register/Register';
+import Demo from './components/Spotify/Demo';
 import Navigation from './components/Navigation/Navigation';
+import Footer from './components/Footer/Footer.js';
+
 import './App.css';
 
 const initialState = {
@@ -108,7 +111,6 @@ class App extends React.Component {
     })
     .then(response => response.json())
     .then(tr => {
-      console.log('tracks response:', tr)
       this.setState({
         newTrackAdded: true
         })
@@ -152,7 +154,6 @@ class App extends React.Component {
     })
       .then(res => res.json())
       .then(data => {
-        console.log('find', data);
         return data;
       })
       .then(trackInfo => {
@@ -182,7 +183,6 @@ class App extends React.Component {
   })
     .then(res => res.json())
     .then(data => {
-      console.log(data);
       return data;
     })
     .then(trackAnalysis => {
@@ -208,14 +208,14 @@ class App extends React.Component {
 
   // Handles views/routes depending on user clicks
   onRouteChange = (route) => {
-    if (route === 'signout') {
+    if (route === 'signout' || route ==='signin' || route ==='register') {
       this.setState(initialState);
     } else if (route === 'home') {
       this.setState({
-        isSignedIn: true
+        isSignedIn: true,
+        initialState: initialState
       })
-    }
-
+    }  
     this.setState({
       route: route
     })
@@ -237,56 +237,95 @@ class App extends React.Component {
             onRouteChange={this.onRouteChange}
             email={this.state.user.email} 
             />
-         { /*<Logo />*/}
+
         { this.state.route === 'home' 
-          ? <div>
-              <HomeView
-                setLoadingToFalse={this.setLoadingToFalse}
-                loading={this.state.loading}
-                trackAnalysisFound={this.state.trackAnalysisFound}
-                setNewTrackAddedToFalse={this.setNewTrackAddedToFalse}
-                newTrackAdded={this.state.newTrackAdded}
-                handleSubmit={this.handleSubmit}
-                handleChange={this.handleChange}
-                email={this.state.user.email}
-                onButtonSubmit={this.onButtonSubmit}
-                postAccess={this.state.trackAnalysisFound} 
-                artistName={this.state.artistName}
-                albumName={this.state.albumName}
-                albumImage={this.state.albumImage}
-                trackName={this.state.trackName}
-                releaseDate={this.state.releaseDate}
-                danceability={this.state.trackDanceability}
-                energy={this.state.trackEnergy}
-                key={this.state.trackKey}
-                loudness={this.state.trackLoudness}
-                mode={this.state.trackMode}
-                speechiness={this.state.trackSpeechiness}
-                acousticness={this.state.trackAcousticness}
-                instrumentalness={this.state.trackInstrumentalness}
-                liveness={this.state.trackLiveness}
-                valence={this.state.trackValence}
-                tempo={this.state.trackTempo}
-                trackInfo={this.state.user.trackInfo}
-                userId={this.state.user.id}
-              />
+          ? (
+              <div>
+                <HomeView
+                  setLoadingToFalse={this.setLoadingToFalse}
+                  loading={this.state.loading}
+                  trackAnalysisFound={this.state.trackAnalysisFound}
+                  setNewTrackAddedToFalse={this.setNewTrackAddedToFalse}
+                  newTrackAdded={this.state.newTrackAdded}
+                  handleSubmit={this.handleSubmit}
+                  handleChange={this.handleChange}
+                  email={this.state.user.email}
+                  onButtonSubmit={this.onButtonSubmit}
+                  postAccess={this.state.trackAnalysisFound} 
+                  artistName={this.state.artistName}
+                  albumName={this.state.albumName}
+                  albumImage={this.state.albumImage}
+                  trackName={this.state.trackName}
+                  releaseDate={this.state.releaseDate}
+                  danceability={this.state.trackDanceability}
+                  energy={this.state.trackEnergy}
+                  key={this.state.trackKey}
+                  loudness={this.state.trackLoudness}
+                  mode={this.state.trackMode}
+                  speechiness={this.state.trackSpeechiness}
+                  acousticness={this.state.trackAcousticness}
+                  instrumentalness={this.state.trackInstrumentalness}
+                  liveness={this.state.trackLiveness}
+                  valence={this.state.trackValence}
+                  tempo={this.state.trackTempo}
+                  trackInfo={this.state.user.trackInfo}
+                  userId={this.state.user.id}
+                />
+                <Footer/>
+              </div>
 
-            </div>
-          : (
-            this.state.route === 'signin' || this.state.route === 'signout'
-            ? <Signin 
-              loadUser={this.loadUser}
-              onRouteChange={this.onRouteChange} /> 
-            : <Register 
-              loadUser={this.loadUser}
-              onRouteChange={this.onRouteChange} /> 
-            ) 
-        }
+        ) : this.state.route === 'signin' || this.state.route === 'signout'
+           
+            ? ( <div>
+                  <Signin 
+                    loadUser={this.loadUser}
+                    onRouteChange={this.onRouteChange} /> 
+                  <Footer/>
+                </div>
 
-        {this.state.route === 'demo'
-        ? 'Hey'
-        : null
-      }
+          ) : this.state.route ==='register' 
+            ? ( <div>
+                  <Register 
+                    loadUser={this.loadUser}
+                    onRouteChange={this.onRouteChange} /> 
+                  <Footer/>
+                </div>
+            ) : this.state.route === 'demo'
+
+            ? ( 
+                <div>
+                  <Demo
+                    setLoadingToFalse={this.setLoadingToFalse}
+                    loading={this.state.loading}
+                    trackAnalysisFound={this.state.trackAnalysisFound}
+                    setNewTrackAddedToFalse={this.setNewTrackAddedToFalse}
+                    handleSubmit={this.handleSubmit}
+                    handleChange={this.handleChange}
+                    onButtonSubmit={this.onButtonSubmit}
+                    artistName={this.state.artistName}
+                    albumName={this.state.albumName}
+                    albumImage={this.state.albumImage}
+                    trackName={this.state.trackName}
+                    releaseDate={this.state.releaseDate}
+                    danceability={this.state.trackDanceability}
+                    energy={this.state.trackEnergy}
+                    key={this.state.trackKey}
+                    loudness={this.state.trackLoudness}
+                    mode={this.state.trackMode}
+                    speechiness={this.state.trackSpeechiness}
+                    acousticness={this.state.trackAcousticness}
+                    instrumentalness={this.state.trackInstrumentalness}
+                    liveness={this.state.trackLiveness}
+                    valence={this.state.trackValence}
+                    tempo={this.state.trackTempo}
+                  />
+                  <Footer/>
+                </div>
+              : null
+            )
+            : null
+        } 
+
 
       </div>
     );

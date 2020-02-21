@@ -1,6 +1,5 @@
 import React from 'react';
 import { TextField, Button } from '@material-ui/core';
-import './UserInput.css';
 
 
 const UserInput = ({ handleSubmit, handleChange }) => {
@@ -8,15 +7,13 @@ const UserInput = ({ handleSubmit, handleChange }) => {
 
 		<form 
       style={{
-        'margin-top': '3rem',
-        'margin-bottom': '3rem'
+        'marginTop': '3rem',
+        'marginBottom': '3rem'
       }}
       onSubmit={ handleSubmit } 
 			noValidate autoComplete="off">
   			<TextField id="outlined-basic"
-  				style={{
-            width: '20rem'
-          }} 
+  				className="textfield"
   				label="Enter track title" 
   				variant="outlined" 
   				onChange={ handleChange } 
@@ -24,8 +21,8 @@ const UserInput = ({ handleSubmit, handleChange }) => {
         <Button
           style={{
             height: '3rem',
-            'margin-left': '2px',
-            'margin-top': '3px'
+            'marginLeft': '2px',
+            'marginTop': '3px'
           }}
           variant="contained" 
           onClick={ handleSubmit }

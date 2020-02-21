@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
 import Acoustic from '../Images/acoustic.png';
 import Dance from '../Images/dancing.png';
 import Energy from '../Images/energy.png';
@@ -20,17 +19,14 @@ const useStyles = makeStyles({
   root: {
     'display': 'inline-block',
     'vertical-align': 'top',
-   	'margin': '4rem',
-   	'padding': '3rem',
+    'marginTop': '2rem',
+   	'margin': '1rem',
+   	'padding': '1rem',
     'border': 'solid black 2px'
 
   },
 
 });
-
-/*
-https://developer.spotify.com/documentation/web-api/reference/tracks/get-audio-features/
-*/
 
 export default function TrackAnalysis( {danceability, energy, loudness, 
 	mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo} ) {
@@ -42,7 +38,7 @@ export default function TrackAnalysis( {danceability, energy, loudness,
   
     <div className={classes.root} >
         <Link style={{
-          'font-size': '1rem',
+          'fontSize': '1rem',
           'margin': '10px'
         }}
         href="https://developer.spotify.com/documentation/web-api/reference/tracks/get-audio-features/" 
@@ -52,7 +48,7 @@ export default function TrackAnalysis( {danceability, energy, loudness,
          
      
         <Grid style={{
-          'margin-top': '10px'
+          'marginTop': '10px'
         }} 
           container
           direction="row"
@@ -64,7 +60,8 @@ export default function TrackAnalysis( {danceability, energy, loudness,
             </Typography>
              <img src={Dance} 
                   height="25" 
-                  width="25"/>  
+                  width="25"
+                  alt="dance img"/>  
         </Grid>
 
          <Grid 
@@ -78,7 +75,8 @@ export default function TrackAnalysis( {danceability, energy, loudness,
             </Typography>
              <img src={Energy} 
                   height="25" 
-                  width="25"/> 
+                  width="25"
+                  alt="energy img"/> 
         </Grid>
 
         <Grid 
@@ -92,7 +90,8 @@ export default function TrackAnalysis( {danceability, energy, loudness,
           </Typography>
             <img src={Loud} 
                 height="25" 
-                width="25"/> 
+                width="25"
+                alt="loudness img"/> 
         </Grid>
 
         <Grid 
@@ -106,7 +105,8 @@ export default function TrackAnalysis( {danceability, energy, loudness,
           </Typography>
             <img src={Mode} 
                 height="25" 
-                width="25"/> 
+                width="25"
+                alt="mode img"/> 
         </Grid>
 
         <Grid 
@@ -120,7 +120,8 @@ export default function TrackAnalysis( {danceability, energy, loudness,
           </Typography>
             <img src={Speech} 
                 height="25" 
-                width="25"/> 
+                width="25"
+                alt="speech img"/> 
         </Grid>
 
         <Grid 
@@ -134,7 +135,8 @@ export default function TrackAnalysis( {danceability, energy, loudness,
           </Typography>
             <img src={Acoustic} 
                 height="25" 
-                width="25"/> 
+                width="25"
+                alt="acoustic img"/> 
         </Grid>
 
         <Grid 
@@ -148,7 +150,8 @@ export default function TrackAnalysis( {danceability, energy, loudness,
           </Typography>
              <img src={Instrumental} 
                 height="25" 
-                width="25"/> 
+                width="25"
+                alt="instrument img"/> 
         </Grid>
 
         <Grid 
@@ -162,7 +165,8 @@ export default function TrackAnalysis( {danceability, energy, loudness,
           </Typography>
                  <img src={Live} 
                 height="25" 
-                width="25"/> 
+                width="25"
+                alt="liveness img"/> 
         </Grid>
        
         <Grid 
@@ -176,7 +180,8 @@ export default function TrackAnalysis( {danceability, energy, loudness,
           </Typography>
               <img src={Positive} 
                 height="25" 
-                width="25"/> 
+                width="25"
+                alt="valence img"/> 
         </Grid>
 
         <Grid 
@@ -190,7 +195,8 @@ export default function TrackAnalysis( {danceability, energy, loudness,
           </Typography>
             <img src={Tempo} 
                 height="25" 
-                width="25"/> 
+                width="25"
+                alt="tempo img"/> 
         </Grid>
      
     </div>

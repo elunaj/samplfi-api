@@ -1,35 +1,51 @@
 import React from 'react';
 import { Grid, AppBar, Toolbar, Typography, Button } from '@material-ui/core';
+import Logo from '../Images/logo.svg';
 import './Navigation.css';
 
 
 const Navigation = ( { onRouteChange, isSignedIn, email }) => {
+		
 		if(isSignedIn) {
 			return (
 
 				<AppBar position="static">
+
 				  <Toolbar>
-				    <Typography 
-				    	variant="h6">
-				      KnowYourSample
-				    </Typography>
-				    
 				    <Grid 
-						container
+				  	container
+					direction="row"
+					alignItems = 'center'
+					justify="flex-start"
+				  	>
+				  	<img 
+				  		className="marginRight"
+				  		src={Logo} 
+		                height="50" 
+		                width="50"
+		                alt="Logo"
+		                  />  
+				    <Typography 
+				    	className="grid-items"
+				    	>
+				    Samplfi
+				    </Typography>
+
+				    </Grid>
+
+				    <Grid 
+				    	container
 						direction="row"
 						alignItems = 'center'
 						justify="flex-end"
-						>	
+				    	>	
 						 <Typography 
-						 	style={{
-						 		'color': 'black',
-
-						 	}}>
+						 	id="email">
 						 	{email}
 				    	</Typography>
 
 						 <Typography 
-						 	style={{'margin-left': '5px'}}
+						 	style={{'marginLeft': '5px'}}
 					    	variant="h6">
 					      ||
 				    	</Typography>
@@ -49,10 +65,24 @@ const Navigation = ( { onRouteChange, isSignedIn, email }) => {
 
 				<AppBar position="static" className="MuiAppBar-colorPrimary">
 				  <Toolbar>
-				    <Typography variant="h6">
-				      KnowYourSample
-				    </Typography>
 
+				  <Grid
+				  	container
+					direction="row"
+					alignItems = 'center'
+					justify="flex-start"
+				  	>
+				  	<img 
+				  		className="marginRight"
+				  		src={Logo} 
+		                height="50" 
+		                width="50"
+		                alt="Logo"
+		                  />  
+				    <Typography variant="h6">
+				      Samplfi
+				    </Typography>
+				    </Grid>
 
 				    <Grid 
 						container
@@ -86,26 +116,3 @@ const Navigation = ( { onRouteChange, isSignedIn, email }) => {
 
 export default Navigation;
 
-
-/*
-<Typography 
-				    	variant="h6">
-				      {' '} |
-				    </Typography>
-				     <Typography 
-				    	style={{'color': 'black'}}
-				    	variant="h6">
-				      {' '} |
-				    </Typography>
-				    <Typography 
-				    	style={{
-				    		'color': 'black',
-				    		'font-size': '1rem'
-				    	}}
-				    	variant="h6">
-				      {' '} {email}
-				    </Typography>
-
-
-
-*/
