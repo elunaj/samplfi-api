@@ -1,4 +1,4 @@
-require('dotenv').config({ path: '../.env'});
+require('dotenv').config({ path: './.env'});
 
 const createError = require('http-errors');
 const express = require('express');
@@ -19,7 +19,7 @@ const tracks = require('./controllers/tracks');
 const db = knex({
   client: 'pg',
   connection: {
-    host : 'localhost',
+    host : 'postgresql-flat-79910',
     user : 'Luna23',
     password : '',
     database : 'music-app'
