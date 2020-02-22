@@ -1,6 +1,5 @@
+require('dotenv').config({ path: './.env'});
 
-const dotenv = require('dotenv');
-dotenv.config();
 const createError = require('http-errors');
 const express = require('express');
 const cookieParser = require('cookie-parser');
@@ -20,9 +19,8 @@ const tracks = require('./controllers/tracks');
 const db = knex({
   client: 'pg',
   connection: {
-    connectionString: process.env.DATABASE_URL,
-    ssl: true
-
+    host : process.env.DATABASE_URL,
+    ssl : true,
   }
 });
 
