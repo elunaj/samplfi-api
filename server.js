@@ -63,9 +63,6 @@ app.delete('/tracks/delete', (req, res) => {
   tracks.handleTracksDelete(req, res, db);
 })
 
-// for production use, we serve the static react build folder
-if(process.env.NODE_ENV==='production') {
-  app.use(express.static(path.join(__dirname, '../client/build')));
 
 // port
 app.listen(PORT, () => {
