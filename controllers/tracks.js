@@ -1,6 +1,6 @@
 const handleTracks = (req, res, db) => {
 
-	const { id, artistName, trackName, albumName, albumImage } = req.body;
+	const { id, artistName, trackName, albumName, albumImage, releaseDate } = req.body;
 
 	db('tracks')
 		.insert({
@@ -8,7 +8,8 @@ const handleTracks = (req, res, db) => {
 			artist_name: artistName,
 			track_title: trackName,
 			album_name: albumName,
-			album_cover_url: albumImage.url
+			album_cover_url: albumImage.url,
+			release_date: releaseDate
 		})
 		.returning('*')
 		.then(result => {
