@@ -33,9 +33,9 @@ const handleTracksDelete = (req, res, db) => {
 					.returning('*')
 					.then(response => {
 						if (response) {
-							res.json('successful delete')
+							res.status(200).json('successful delete')
 						} else {
-							res.json('unsuccessful delete')
+							res.status(500).json('unsuccessful delete')
 						}
 					})
 			} else {

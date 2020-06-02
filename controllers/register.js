@@ -9,9 +9,8 @@ const handleRegister = (req, res, db, bcrypt) => {
 	const saltRounds = 10;
 
 	bcrypt.hash(password, saltRounds, (err, hash) => {
+  		
   		// Store hash in your password DB.
-  		console.log(hash);
-
 	  	db.transaction(trx => {
 			trx.insert({
 				hash: hash,

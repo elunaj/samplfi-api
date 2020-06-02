@@ -27,11 +27,11 @@ router.get('/:query', (req, res) => {
           res.json(response.data);
         })
         .catch(error => {
-          console.log('error ', error);
+          res.status(500).json('api error');
         })
 
   })
-  .then(err => console.log('query error: ' ,err));
+  .catch(err => res.status(400).json('query error'));
    
 });
 
@@ -54,14 +54,15 @@ router.get('/analysis/:id', (req, res) => {
           }
         })
         .then(response => {
+          // console.log("trackId: ", response.tracks.items[0].id)
           res.json(response.data);
         })
         .catch(error => {
-          console.log('error ' ,error);
+          res.status(500).json('api error');
         })
 
     })
-    .then(err => console.log('analysis error', err));
+    .catch(err => res.status(400).json('query error'));
 
 
 });
