@@ -16,23 +16,23 @@ const profile = require('./controllers/profile');
 const tracks = require('./controllers/tracks');
 
 //Database connection
-// const db = knex({
-//   client: 'pg',
-//   connection: {
-//     connectionString : process.env.DATABASE_URL,
-//     ssl : true,
-//   }
-// });
-
-const db = require('knex')({
-  client: 'postgresql',
+const db = knex({
+  client: 'pg',
   connection: {
-    host : '127.0.0.1',
-    user : '',
-    password : '',
-    database : 'music-app'
+    connectionString : process.env.DATABASE_URL,
+    ssl : true,
   }
 });
+
+// const db = require('knex')({
+//   client: 'postgresql',
+//   connection: {
+//     host : '127.0.0.1',
+//     user : '',
+//     password : '',
+//     database : 'music-app'
+//   }
+// });
 
 const app = express();
 const PORT = process.env.PORT || 5000;
