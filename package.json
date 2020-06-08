@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "jest",
+    "nodemon": "nodemon server.js"
   },
   "dependencies": {
     "axios": "^0.19.2",

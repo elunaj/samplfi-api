@@ -24,16 +24,6 @@ const db = knex({
   }
 });
 
-// const db = require('knex')({
-//   client: 'postgresql',
-//   connection: {
-//     host : '127.0.0.1',
-//     user : '',
-//     password : '',
-//     database : 'music-app'
-//   }
-// });
-
 const app = express();
 const PORT = process.env.PORT || 5000;
 
